@@ -71,9 +71,33 @@
             <version>${spring.version}</version>
         </dependency>
 
-        
+
     </dependencies>
     <build>
         <finalName>JavaWebSocket</finalName>
+        <plugins>
+            <!--使用maven-war-plugin这个插件可以在执行打包命令的时候指定我要打哪个环境的包, 而不需要去关注我现在要用什么配置文件了.当然只适用于Maven项目-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.0.v20140526</version>
+            </plugin>
+        </plugins>
     </build>
 </project>

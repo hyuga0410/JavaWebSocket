@@ -20,7 +20,7 @@
     var websocket = null;
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
-        websocket = new WebSocket("ws://localhost:8080/websocket");
+        websocket = new WebSocket("ws://localhost:9993/websocket");
     }
     else {
         alert('当前浏览器 Not support websocket')
@@ -34,12 +34,12 @@
     //连接成功建立的回调方法
     websocket.onopen = function () {
         setMessageInnerHTML("WebSocket连接成功");
-    }
+    };
 
     //接收到消息的回调方法
     websocket.onmessage = function (event) {
         setMessageInnerHTML(event.data);
-    }
+    };
 
     //连接关闭的回调方法
     websocket.onclose = function () {
