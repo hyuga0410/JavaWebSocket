@@ -15,6 +15,7 @@ public class Monitor implements Runnable {
 
     public void sendMsg() {
         ScheduledExecutorService newScheduledThreadPool = Executors.newSingleThreadScheduledExecutor();
+        //启动20s后向客户端发送消息，接下来每隔5s发消息
         newScheduledThreadPool.scheduleWithFixedDelay(new Monitor(), 20, 5, TimeUnit.SECONDS);
 
     }

@@ -8,6 +8,6 @@
 			http://www.springframework.org/schema/context
 			http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-
-    <bean name="monitor" class="Monitor" lazy-init="false"    init-method="sendMsg"></bean>
-    </beans>
+    <!--配置监听器-->
+    <bean name="monitor" class="Monitor" lazy-init="false" init-method="sendMsg"/>
+</beans>

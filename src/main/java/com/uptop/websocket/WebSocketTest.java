@@ -17,7 +17,7 @@ public class WebSocketTest {
     private static int onlineCount = 0;
 
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
-    public static CopyOnWriteArraySet<WebSocketTest> webSocketSet = new CopyOnWriteArraySet<WebSocketTest>();
+    private static CopyOnWriteArraySet<WebSocketTest> webSocketSet = new CopyOnWriteArraySet<>();
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
@@ -41,7 +41,7 @@ public class WebSocketTest {
     @OnClose
     public void onClose() {
         webSocketSet.remove(this);  //从set中删除
-        subOnlineCount();           //在线数减1
+        subOnlineCount();              //在线数减1
         System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
     }
 
@@ -53,7 +53,7 @@ public class WebSocketTest {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("来自客户端的消息:" + message);
+        System.out.println("来自客户端的消息:" + message + "[" + session.getId() + "]");
         //群发消息
         for (WebSocketTest item : webSocketSet) {
             try {
@@ -68,19 +68,19 @@ public class WebSocketTest {
     /**
      * 发生错误时调用
      *
-     * @param session
-     * @param error
+     * @param session 当前会话
+     * @param error   错误信息
      */
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("发生错误");
+        System.out.println("发生错误。sessionId=" + session.getId());
         error.printStackTrace();
     }
 
     /**
      * 这个方法与上面几个方法不一样。没有用注解，是根据自己需要添加的方法。
      *
-     * @param message
+     * @param message 消息
      * @throws IOException
      */
     public void sendMessage(String message) throws IOException {
